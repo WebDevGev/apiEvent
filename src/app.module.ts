@@ -1,8 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { SequelizeModule } from "@nestjs/sequelize";
-import { User } from "./users/user.model";
+import { User } from "./users/entities/user.entity";
 import { UsersModule } from './users/users.module';
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { EventsModule } from './events/events.module';
+import { Event } from "./events/entities/event.entity";
 
 
 @Module({
@@ -10,19 +12,22 @@ import { UsersModule } from './users/users.module';
     providers: [],
     imports: [
         ConfigModule.forRoot({
-            envFilePath: `.${process.env.NODE_ENV}.env`
+            envFilePath: '.env',
+            isGlobal: true
         }),
-        SequelizeModule.forRoot({
-            dialect: 'postgres',
+        TypeOrmModule.forRoot({
+            type: 'postgres',
             host: process.env.POSTGRES_HOST,
             port: Number(process.env.POSTGRES_PORT),
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User],
-            autoLoadModels: true
+            entities: [User, Event],
+            autoLoadEntities: true,
+            synchronize: true
           }),
         UsersModule,
+        EventsModule,
     ],
 
 })
