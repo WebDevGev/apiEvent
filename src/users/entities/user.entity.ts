@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
 import {IsEmail, IsNotEmpty} from 'class-validator'
 
 @Entity()
@@ -24,4 +24,10 @@ export class User {
 
   @Column({ default: false })
   organizator?: boolean;
+
+  @BeforeInsert()
+  emailToLowerCase(){
+    this.email = this.email.toLowerCase();
+  }
+
 }

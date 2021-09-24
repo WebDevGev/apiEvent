@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { EventsModule } from './events/events.module';
 import { Event } from "./events/entities/event.entity";
+import { AuthModule } from "./auth/auth.module";
 
 
 @Module({
