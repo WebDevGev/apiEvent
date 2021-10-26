@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsBoolean } from "class-validator";
+import { User } from "src/users/entities/user.entity";
 
 
 export class CreateEventDto {
@@ -12,7 +13,10 @@ export class CreateEventDto {
     @IsString()
     readonly eventTime: string;
 
-    @ApiProperty({example: 'Email', description: 'Event time'})
+    @ApiProperty({example: true, description: 'Boolean value'})
     @IsBoolean()
     readonly organizator: boolean
+
+    @ApiProperty({})
+    readonly partisipants: User [];
 }
